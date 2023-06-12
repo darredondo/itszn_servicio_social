@@ -5,6 +5,11 @@
  */
 package aprobacion_de_documentos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author aguer
@@ -32,6 +37,11 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setText("APROBACIÓN DE DOCUMENTOS");
 
@@ -82,6 +92,22 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        
+        ControlDocumentos control=new ControlDocumentos();
+        ResultSet ListaDocumentos=control.obtenerDocumentos("Ezequiel");
+        
+        try {
+            //Colocar la lista en el grid
+            while(ListaDocumentos.next()){
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAprobacionDocumentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
