@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +23,24 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
      */
     public FrmAprobacionDocumentos() {
         initComponents();
+
+        ControlDocumentos control = new ControlDocumentos();
+        ResultSet ListaDocumentos = control.obtenerDocumentos("Ezequiel");
+
+        try {
+            //Colocar la lista en el grid
+            DefaultTableModel modelo = (DefaultTableModel) Tdocumentos.getModel();
+            while (ListaDocumentos.next()) {
+                Object[] fila = {
+                    ListaDocumentos.getString("Titulo"),
+                    ListaDocumentos.getBoolean("estado")
+                };
+                modelo.addRow(fila);
+            }
+            Tdocumentos.setModel(modelo);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAprobacionDocumentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -34,7 +54,8 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tdocumentos = new javax.swing.JTable();
+        Bguardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -45,12 +66,9 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
 
         jLabel1.setText("APROBACIÓN DE DOCUMENTOS");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tdocumentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Documento", "Aprobado"
@@ -64,7 +82,14 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(Tdocumentos);
+
+        Bguardar.setText("Guardar");
+        Bguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BguardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,7 +102,10 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(195, 195, 195)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(Bguardar)))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -87,7 +115,9 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(Bguardar)
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -95,19 +125,20 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        
-        ControlDocumentos control=new ControlDocumentos();
-        ResultSet ListaDocumentos=control.obtenerDocumentos("Ezequiel");
-        
-        try {
-            //Colocar la lista en el grid
-            while(ListaDocumentos.next()){
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FrmAprobacionDocumentos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+
     }//GEN-LAST:event_formWindowActivated
+
+    private void BguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BguardarActionPerformed
+        // TODO add your handling code here:
+        for (int i = 0; i < Tdocumentos.getRowCount(); i++) {
+            
+            //Enviar al coontrol los datos de titulo y estado para actualizarlos
+            
+            
+            JOptionPane.showMessageDialog(this, Tdocumentos.getValueAt(i, 0) + " evaluado como " + Tdocumentos.getValueAt(i, 1));
+        }
+    }//GEN-LAST:event_BguardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,8 +176,9 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Bguardar;
+    private javax.swing.JTable Tdocumentos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

@@ -61,7 +61,7 @@ public class ControlDocumentos {
      * @return Lista de departamentos
      */
     ResultSet obtenerDocumentos(String responsable) {
-        String SQL = "SELECT * FROM documento where responsable= '?1'";
+        String SQL = "SELECT * FROM documento";
         SQL = SQL.replace("?1", responsable);
         try {
             BDconexion conexion = new BDconexion();
