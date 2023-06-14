@@ -2,6 +2,9 @@ package consulta_exp_admin;
 
 import commons.Convertidor;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,6 +53,11 @@ public class consulta_exp_admin extends javax.swing.JFrame {
             }
         ));
         Talumnos.setName(""); // NOI18N
+        Talumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TalumnosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Talumnos);
 
         Txtbusqueda.setName(""); // NOI18N
@@ -113,6 +121,21 @@ public class consulta_exp_admin extends javax.swing.JFrame {
         //Tranformamo el ResulSet a un modelo de tabla par averlo en pantalla
         Talumnos.setModel(   Convertidor.convertir(ListaEstudiantes)   );
     }//GEN-LAST:event_formWindowActivated
+
+    private void TalumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TalumnosMouseClicked
+        // TODO add your handling code here:
+        int fila=Talumnos.getSelectedRow();
+        if(fila>=0){
+            int idEstudiante=Integer.parseInt(Talumnos.getValueAt(fila, 0).toString());
+            visualizacion_exp ver_exp=new visualizacion_exp();
+            try {
+                ver_exp.asignarIDEstudiante(idEstudiante);
+            } catch (SQLException ex) {
+                Logger.getLogger(consulta_exp_admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ver_exp.setVisible(true);
+        }
+    }//GEN-LAST:event_TalumnosMouseClicked
 
     /**
      * @param args the command line arguments
