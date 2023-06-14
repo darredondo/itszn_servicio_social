@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package consulta_exp_admin;
+
+import commons.Convertidor;
+import java.sql.ResultSet;
 
 /**
  *
@@ -27,13 +26,18 @@ public class consulta_exp_admin extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Talumnos = new javax.swing.JTable();
+        Txtbusqueda = new javax.swing.JTextField();
+        Bbuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Talumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -44,11 +48,19 @@ public class consulta_exp_admin extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        Talumnos.setName(""); // NOI18N
+        jScrollPane1.setViewportView(Talumnos);
 
-        jTextField1.setText("ingrese nombre del aliumno");
+        Txtbusqueda.setText("ingrese nombre del aliumno");
+        Txtbusqueda.setName(""); // NOI18N
 
-        jButton1.setText("Buscar");
+        Bbuscar.setText("Buscar");
+        Bbuscar.setName("Bbuscar"); // NOI18N
+        Bbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BbuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,9 +68,9 @@ public class consulta_exp_admin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Txtbusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(Bbuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
@@ -68,8 +80,8 @@ public class consulta_exp_admin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(Txtbusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Bbuscar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -78,6 +90,24 @@ public class consulta_exp_admin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+                            
+    private void BbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BbuscarActionPerformed
+        // Declaramos un control para obtener la información
+        Controlestudiantes control=new Controlestudiantes();
+        //Obtenemos la información de los departamentos que coinciden con el filtro de busqueda
+        ResultSet ListaEstudiantes=control.obtenerEstudiantes(Txtbusqueda.getText());
+        //Tranformamo el ResulSet a un modelo de tabla par averlo en pantalla
+        Talumnos.setModel(   Convertidor.convertir(ListaEstudiantes)   );
+    }//GEN-LAST:event_BbuscarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // Declaramos un control para obtener la información
+        Controlestudiantes control=new Controlestudiantes();
+        //Obtenemos la información de los departamentos
+        ResultSet ListaEstudiantes=control.obtenerEstudiantes();
+        //Tranformamo el ResulSet a un modelo de tabla par averlo en pantalla
+        Talumnos.setModel(   Convertidor.convertir(ListaEstudiantes)   );
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -115,9 +145,9 @@ public class consulta_exp_admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Bbuscar;
+    private javax.swing.JTable Talumnos;
+    private javax.swing.JTextField Txtbusqueda;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

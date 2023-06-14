@@ -1,4 +1,4 @@
-package Commons;
+package commons;
 
 public class ConfigBD {
     static public String Servidor="localhost";

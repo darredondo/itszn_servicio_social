@@ -1,4 +1,4 @@
-package Commons;
+package commons;
 /*
  Esta clase permite interactual  con una base de datos MySQL
  Requiere la libreria: mysql-connector-java-5.1.6-bin.jar
