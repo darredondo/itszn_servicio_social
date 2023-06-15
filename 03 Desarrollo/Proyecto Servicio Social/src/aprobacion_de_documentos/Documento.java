@@ -12,11 +12,11 @@ package aprobacion_de_documentos;
 public class Documento {
     int idDocumento;
     String nombre;
-    String evaluacion;
+    String Evaluacion;
 
     @Override
     public String toString() {
-        return "Documento{" + "idDocumento=" + idDocumento + ", nombre=" + nombre + ", evaluacion=" + evaluacion + '}';
+        return "Documento{" + "idDocumento=" + idDocumento + ", nombre=" + nombre + ", evaluacion=" + Evaluacion + '}';
     }
 
     public int getIdDocumento() {
@@ -36,11 +36,11 @@ public class Documento {
     }
 
     public String getEvaluacion() {
-        return evaluacion;
+        return Evaluacion;
     }
 
-    public void setEvaluacion(String evaluacion) {
-        this.evaluacion = evaluacion;
+    public void setEvaluacion(String Evaluacion) {
+        this.Evaluacion = Evaluacion;
     }
     
     

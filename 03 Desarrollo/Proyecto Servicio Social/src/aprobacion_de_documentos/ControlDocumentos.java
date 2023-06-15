@@ -12,33 +12,6 @@ import java.sql.ResultSet;
  */
 public class ControlDocumentos {
 
-    /**
-     * *
-     * Recibe un departamento nuevo y lo almacena en la base de datos.
-     *
-     * @param nuevo
-     */
-    /*public void agregarDepartamento(Departamento nuevo) {
-        //Generamos el SQL para insertar un nuevo departamento
-        String SQL = "insert into departamento values(null, '?1','?2')";
-        SQL = SQL.replace("?1", nuevo.getNombre());
-        SQL = SQL.replace("?2", nuevo.getEdificio());
-
-        try {
-            BDconexion conexion = new BDconexion();
-            conexion.conectar();
-            conexion.ejecutarActualizacion(SQL);
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
-    }
-*/
-    /**
-     * *
-     * Consulta los departamentos pororden de nombre
-     *
-     * @return Lista de departamentos
-     */
     public ResultSet obtenerDepartamentos() {
         String SQL = "SELECT * FROM departamento order by nombre";
 
@@ -71,6 +44,23 @@ public class ControlDocumentos {
         } catch (Exception ex) {
             System.out.println(ex.toString());
             return null;
+        }
+    }
+    
+    public boolean Actualizar(Documento control) {
+       
+        String SQL = "UPDATE documento SET estado = '?1' WHERE Titulo = '?2'";
+        SQL = SQL.replace("?1", control.getEvaluacion());
+        SQL = SQL.replace("?2", control.getNombre());
+
+        try {
+            BDconexion conexion = new BDconexion();
+            conexion.conectar();
+            conexion.ejecutarActualizacion(SQL);
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return false;
         }
     }
 }

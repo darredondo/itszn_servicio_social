@@ -82,6 +82,11 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        Tdocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TdocumentosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(Tdocumentos);
 
         Bguardar.setText("Guardar");
@@ -131,14 +136,34 @@ public class FrmAprobacionDocumentos extends javax.swing.JFrame {
 
     private void BguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BguardarActionPerformed
         // TODO add your handling code here:
+
         for (int i = 0; i < Tdocumentos.getRowCount(); i++) {
             
             //Enviar al coontrol los datos de titulo y estado para actualizarlos
+            Documento nuevo = new Documento();
             
+            nuevo.setNombre(Tdocumentos.getValueAt(i, 0).toString());
+            //nuevo.setEvaluacion(Tdocumentos.getValueAt(i, 1).toString());
+            if (Tdocumentos.getValueAt(i, 1).toString() == "true") {
+                nuevo.setEvaluacion("1");
+            } else {
+                nuevo.setEvaluacion("0");
+            }
+            
+            
+            //Enviamos los datos al control para almacenarlo en la BD
+            ControlDocumentos control = new ControlDocumentos();
+            control.Actualizar(nuevo);
+            JOptionPane.showMessageDialog(this, "Estado actualizado");
             
             JOptionPane.showMessageDialog(this, Tdocumentos.getValueAt(i, 0) + " evaluado como " + Tdocumentos.getValueAt(i, 1));
+       
         }
     }//GEN-LAST:event_BguardarActionPerformed
+
+    private void TdocumentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TdocumentosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TdocumentosMouseClicked
 
     /**
      * @param args the command line arguments
